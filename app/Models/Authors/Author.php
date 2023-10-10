@@ -2,6 +2,10 @@
 
 namespace App\Models\Authors;
 
+use App\Models\Authors\Articles\Article;
+use App\Models\Authors\WorkHistory\WorkHistory;
+use App\Models\Company\Company;
+use App\Models\Projects\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,6 +41,7 @@ class Author extends Model
     public function companies()
     {
         return $this->belongsToMany(Company::class, 'work_histories', 'author_id', 'company_id')
+                    ->using(WorkHistory::class)
                     ->withPivot(['position', 'start', 'end'])
                     ->withTimestamps();
     }

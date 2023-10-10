@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Authors\AuthorController;
+use App\Http\Controllers\Companies\CompaniesController;
+use App\Http\Controllers\Projects\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +21,5 @@ Route::get('/', function () {
 });
 
 Route::resource('authors', AuthorController::class);
+Route::resource('projects', ProjectController::class);
+Route::resource('companies', CompaniesController::class);

@@ -46,7 +46,7 @@ class Project extends Model
      */
     public function companies()
     {
-        return $this->belongsToMany(Company::class, 'contributions')
+        return $this->belongsToMany(Company::class, 'contributions', 'project_id', 'company_id')
                     ->using(Contribution::class)
                     ->withPivot(['description', 'company_role', 'project_update', 'start', 'end'])
                     ->withTimestamps();

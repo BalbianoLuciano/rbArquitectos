@@ -2,23 +2,23 @@
 
 namespace App\Models\Company\Contribution;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Contribution extends Model
+class Contribution extends Pivot
 {
-    use HasFactory;
-    
     protected $table = 'contributions';
 
     public $timestamps = true;
-
+    
     protected $fillable = [
-        'company_id',
-        'project_id',
         'description',
         'company_role',
         'project_update',
+        'start',
+        'end',
+    ];
+    
+    protected $dates = [
         'start',
         'end',
     ];

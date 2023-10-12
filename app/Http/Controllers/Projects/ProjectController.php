@@ -34,25 +34,47 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        // Crear proyecto
         $project = Project::create($request->all());
+
+        // Gestionar relación con autores
+        $authors = $request->input('authors');
+        $roles = $request->input('roles');
+
+        $authorRoleData = [];
+        foreach ($authors as $index => $authorId) {
+            $authorRoleData[$authorId] = ['project_role' => trim($roles[$index] ?? '')];
+        }
+        $project->authors()->attach($authorRoleData);
+
         
-        $project->authors()->attach($request->input('author_id'), ['project_role' => $request->input('author_role')]);
-        
-        if ($request->input('company_id')) {
-            $project->companies()->attach(
-                $request->input('company_id'),
-                [
-                    'description' => $request->input('company_description'),
-                    'company_role' => $request->input('company_role'),
-                    'project_update' => $request->input('project_update'),
-                    'start' => $request->input('company_start'),
-                    'end' => $request->input('company_end')
-                ]
-            );
+        if ($request->has('companies')) {
+            // Gestionar relación con compañías
+            $companies = $request->input('companies');
+            $company_descriptions = $request->input('company_descriptions');
+            $company_roles = $request->input('company_roles');
+            $project_updates = $request->input('project_updates');
+            $company_starts = $request->input('company_starts');
+            $company_ends = $request->input('company_ends');
+
+            $companyData = [];
+            foreach ($companies as $index => $companyId) {
+                $companyData[$companyId] = [
+                    'description' => trim($company_descriptions[$index] ?? ''),
+                    'company_role' => trim($company_roles[$index] ?? ''),
+                    'project_update' => trim($project_updates[$index] ?? ''),
+                    'start' => trim($company_starts[$index] ?? ''),
+                    'end' => trim($company_ends[$index] ?? '')
+                ];
+            }
+            $project->companies()->attach($companyData);
         }
 
+
+        // Redireccionar
         return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
+
 
 
     /**
@@ -78,28 +100,45 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
+        // Actualizar proyecto
         $project->update($request->all());
 
-        // Desatachar y volver a atachar para actualizar el pivot. Considera usar sync() para proyectos con múltiples autores/companies
-        $project->authors()->detach();
-        $project->authors()->attach($request->input('author_id'), ['project_role' => $request->input('author_role')]);
+        // Gestionar relación con autores
+        $authors = $request->input('authors');
+        $roles = $request->input('roles');
 
-        if ($request->input('company_id')) {
-            $project->companies()->detach();
-            $project->companies()->attach(
-                $request->input('company_id'),
-                [
-                    'description' => $request->input('company_description'),
-                    'company_role' => $request->input('company_role'),
-                    'project_update' => $request->input('project_update'),
-                    'start' => $request->input('company_start'),
-                    'end' => $request->input('company_end')
-                ]
-            );
+        $authorRoleData = [];
+        foreach ($authors as $index => $authorId) {
+            $authorRoleData[$authorId] = ['project_role' => trim($roles[$index] ?? '')];
+        }
+        $project->authors()->sync($authorRoleData);
+
+        // Gestionar relación con compañías solo si están presentes
+        if ($request->has('companies')) {
+            $companies = $request->input('companies');
+            $company_descriptions = $request->input('company_descriptions');
+            $company_roles = $request->input('company_roles');
+            $project_updates = $request->input('project_updates');
+            $company_starts = $request->input('company_starts');
+            $company_ends = $request->input('company_ends');
+
+            $companyData = [];
+            foreach ($companies as $index => $companyId) {
+                $companyData[$companyId] = [
+                    'description' => trim($company_descriptions[$index] ?? ''),
+                    'company_role' => trim($company_roles[$index] ?? ''),
+                    'project_update' => trim($project_updates[$index] ?? ''),
+                    'start' => trim($company_starts[$index] ?? ''),
+                    'end' => trim($company_ends[$index] ?? '')
+                ];
+            }
+            $project->companies()->sync($companyData);
         }
 
+        // Redireccionar
         return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
+
 
 
     /**
@@ -109,6 +148,6 @@ class ProjectController extends Controller
     {
         $project->delete();
         return redirect()->route('projects.index')
-                        ->with('success', 'Project deleted successfully');
+            ->with('success', 'Project deleted successfully');
     }
 }

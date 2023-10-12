@@ -29,11 +29,18 @@ class ProjectRequest extends FormRequest
             'end' => 'nullable|date|after_or_equal:start',
             'authors' => 'required|array|min:1',
             'authors.*' => 'exists:authors,author_id',
+            'roles' => 'array|min:1',
+            'roles.*' => 'required|string',
             'companies' => 'nullable|array',
             'companies.*' => 'exists:companies,company_id',
+            'company_descriptions.*' => 'nullable|string|max:255',
+            'company_roles.*' => 'required|in:builder,construction manager,designer',
+            'project_updates.*' => 'nullable|string|max:255',
+            'company_starts.*' => 'nullable|date',
+            'company_ends.*' => 'nullable|date|after_or_equal:company_starts.*',
         ];
     }
-    
+
     public function messages()
     {
         return [

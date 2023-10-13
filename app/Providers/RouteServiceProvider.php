@@ -28,13 +28,29 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
+        $this->configureRoutes();
+    }
+
+    /**
+     * Configure the routes offered by the application.
+     *
+     * Here we are including our panel.php file.
+     */
+    private function configureRoutes(): void
+    {
         $this->routes(function () {
+            // Existing routes registration...
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            // Adding our custom panel routes
+            Route::middleware('web')  // Apply 'web' middleware
+                ->prefix('panel')
+                ->group(base_path('routes/panel.php'));  // Pointing to our panel routes file
         });
     }
 }

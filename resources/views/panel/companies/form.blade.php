@@ -17,5 +17,5 @@
 </div>
 
 <button type="submit" class="btn btn-primary">{{ $buttonText }}</button>
-<a href="{{route('companies.index')}}" class="btn btn-secondary">Go back</a>
+<a href="{{route('panel.companies.index')}}" class="btn btn-secondary">Go back</a>
 

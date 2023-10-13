@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3 class="card-title">Companies</h3>
             <div class="card-tools">
-                <a href="{{ route('companies.create') }}" class="btn btn-primary">Create Company</a>
+                <a href="{{ route('panel.companies.create') }}" class="btn btn-primary">Create Company</a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -33,14 +33,18 @@
                             <td>{{ $company->direction }}</td>
                             <td>{{ Str::limit($company->description, 50) }}</td>
                             <td>
-                                <a href="{{ route('companies.edit', $company) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('companies.show', $company) }}" class="btn btn-info">Show</a>
-                                <form action="{{ route('companies.destroy', $company) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('panel.companies.edit', $company) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('panel.companies.show', $company) }}" class="btn btn-info">Show</a>
+                                <form action="{{ route('panel.companies.destroy', $company) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">No companies found</td>
                         </tr>
                     @endforeach
                 </tbody>

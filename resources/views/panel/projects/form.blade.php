@@ -47,11 +47,11 @@
 
         <!-- Resto del formulario... -->
 
-        @include('pages.projects.addAuthor')
-        @include('pages.projects.addCompany')
+        @include('panel.projects.addAuthor')
+        @include('panel.projects.addCompany')
 
         
     </div>
     <button type="submit" class="btn btn-primary">{{ $buttonText }}</button>
-    <a href="{{ route('projects.index') }}" class="btn btn-secondary">Go back</a>
+    <a href="{{ route('panel.projects.index') }}" class="btn btn-secondary">Go back</a>
 </div>

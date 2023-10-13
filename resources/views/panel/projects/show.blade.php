@@ -23,8 +23,8 @@
 
 
     <!-- ... Display other project details as needed ... -->
-    <a href="{{ route('projects.edit', $project) }}" class="btn btn-primary">Edit</a>
-    <form action="{{ route('projects.destroy', $project) }}" method="POST" class="d-inline-block">
+    <a href="{{ route('panel.projects.edit', $project) }}" class="btn btn-primary">Edit</a>
+    <form action="{{ route('panel.projects.destroy', $project) }}" method="POST" class="d-inline-block">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">Delete</button>

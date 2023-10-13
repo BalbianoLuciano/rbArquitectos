@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3 class="card-title">Authors</h3>
             <div class="card-tools">
-                <a href="{{ route('authors.create') }}" class="btn btn-primary">Create Author</a>
+                <a href="{{ route('panel.authors.create') }}" class="btn btn-primary">Create Author</a>
             </div>
         </div>
         <!-- /.card-header -->
@@ -25,21 +25,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($authors as $author)
+                    @forelse($authors as $author)
                         <tr>
                             <td>{{ $author->author_id }}</td>
                             <td>{{ $author->name }}</td>
                             <td>
-                                <a href="{{ route('authors.edit', $author) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('authors.show', $author) }}" class="btn btn-info">show</a>
-                                <form action="{{ route('authors.destroy', $author) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('panel.authors.edit', $author) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('panel.authors.show', $author) }}" class="btn btn-info">show</a>
+                                <form action="{{ route('panel.authors.destroy', $author) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">No authors found</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

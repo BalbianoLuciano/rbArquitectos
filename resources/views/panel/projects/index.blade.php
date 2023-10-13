@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3 class="card-title">Projects</h3>
             <div class="card-tools">
-                <a href="{{ route('projects.create') }}" class="btn btn-primary">Create Project</a>
+                <a href="{{ route('panel.projects.create') }}" class="btn btn-primary">Create Project</a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -26,23 +26,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($projects as $project)
+                    @forelse($projects as $project)
                         <tr>
                             <td>{{ $project->id }}</td>
                             <td>{{ $project->name }}</td>
                             <td>{{ $project->start }}</td>
                             <td>{{ $project->end }}</td>
                             <td>
-                                <a href="{{ route('projects.edit', $project) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('projects.show', $project) }}" class="btn btn-info">show</a>
-                                <form action="{{ route('projects.destroy', $project) }}" method="POST" style="display:inline;">
+                                <a href="{{ route('panel.projects.edit', $project) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('panel.projects.show', $project) }}" class="btn btn-info">show</a>
+                                <form action="{{ route('panel.projects.destroy', $project) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">No projects found</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

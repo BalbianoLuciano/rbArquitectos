@@ -14,7 +14,7 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = Company::paginate(10);
-        return view('pages.companies.index', compact('companies'));
+        return view('panel.companies.index', compact('companies'));
     }
 
     /**
@@ -22,7 +22,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('pages.companies.create');
+        return view('panel.companies.create');
     }
 
     /**
@@ -31,7 +31,7 @@ class CompaniesController extends Controller
     public function store(CompaniesRequest $request)
     {
         Company::create($request->validated());
-        return redirect()->route('companies.index')->with('success', 'Company created successfully!');
+        return redirect()->route('panel.companies.index')->with('success', 'Company created successfully!');
     }
 
     /**
@@ -39,7 +39,7 @@ class CompaniesController extends Controller
      */
     public function show(Company $company)
     {
-        return view('pages.companies.show', compact('company'));
+        return view('panel.companies.show', compact('company'));
     }
 
     /**
@@ -47,7 +47,7 @@ class CompaniesController extends Controller
      */
     public function edit(Company $company)
     {
-        return view('pages.companies.edit', compact('company'));
+        return view('panel.companies.edit', compact('company'));
     }
 
     /**
@@ -56,7 +56,7 @@ class CompaniesController extends Controller
     public function update(CompaniesRequest $request, Company $company)
     {
         $company->update($request->validated());
-        return redirect()->route('companies.index')->with('success', 'Company updated successfully!');
+        return redirect()->route('panel.companies.index')->with('success', 'Company updated successfully!');
     }
 
     /**
@@ -65,6 +65,6 @@ class CompaniesController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-        return redirect()->route('companies.index')->with('success', 'Company deleted successfully!');
+        return redirect()->route('panel.companies.index')->with('success', 'Company deleted successfully!');
     }
 }

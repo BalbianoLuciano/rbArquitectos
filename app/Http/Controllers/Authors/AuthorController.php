@@ -16,7 +16,7 @@ class AuthorController extends Controller
     public function index()
     {
         $authors = Author::paginate(10); // 10 autores por página
-        return view('pages.authors.index', compact('authors'));
+        return view('panel.authors.index', compact('authors'));
     }
 
     /**
@@ -26,7 +26,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        return view('pages.authors.create');
+        return view('panel.authors.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class AuthorController extends Controller
     public function store(AuthorRequest $request)
     {
         Author::create($request->validated());
-        return redirect()->route('authors.index')->with('success', 'Author created successfully.');
+        return redirect()->route('panel.authors.index')->with('success', 'Author created successfully.');
     }
 
     /**
@@ -49,7 +49,7 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        return view('pages.authors.show', compact('author'));
+        return view('panel.authors.show', compact('author'));
     }
 
     /**
@@ -60,7 +60,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        return view('pages.authors.edit', compact('author'));
+        return view('panel.authors.edit', compact('author'));
     }
 
     /**
@@ -73,7 +73,7 @@ class AuthorController extends Controller
     public function update(AuthorRequest $request, Author $author)
     {
         $author->update($request->validated());
-        return redirect()->route('authors.index')->with('success', 'Author updated successfully.');
+        return redirect()->route('panel.authors.index')->with('success', 'Author updated successfully.');
     }
 
     /**
@@ -85,6 +85,6 @@ class AuthorController extends Controller
     public function destroy(Author $author)
     {
         $author->delete();
-        return redirect()->route('authors.index')->with('success', 'Author deleted successfully.');
+        return redirect()->route('panel.authors.index')->with('success', 'Author deleted successfully.');
     }
 }

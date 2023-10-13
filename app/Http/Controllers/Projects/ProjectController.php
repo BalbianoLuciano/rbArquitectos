@@ -16,7 +16,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::paginate(10);
-        return view('pages.projects.index', compact('projects'));
+        return view('panel.projects.index', compact('projects'));
     }
 
     /**
@@ -26,7 +26,7 @@ class ProjectController extends Controller
     {
         $authors = Author::all();
         $companies = Company::all();
-        return view('pages.projects.create', compact('authors', 'companies'));
+        return view('panel.projects.create', compact('authors', 'companies'));
     }
 
     /**
@@ -72,7 +72,7 @@ class ProjectController extends Controller
 
 
         // Redireccionar
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+        return redirect()->route('panel.projects.index')->with('success', 'Project created successfully.');
     }
 
 
@@ -82,7 +82,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('pages.projects.show', compact('project'));
+        return view('panel.projects.show', compact('project'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ProjectController extends Controller
     {
         $authors = Author::all();
         $companies = Company::all();
-        return view('pages.projects.edit', compact('project', 'authors', 'companies'));
+        return view('panel.projects.edit', compact('project', 'authors', 'companies'));
     }
 
     /**
@@ -136,7 +136,7 @@ class ProjectController extends Controller
         }
 
         // Redireccionar
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
+        return redirect()->route('panel.projects.index')->with('success', 'Project updated successfully.');
     }
 
 
@@ -147,7 +147,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-        return redirect()->route('projects.index')
+        return redirect()->route('panel.projects.index')
             ->with('success', 'Project deleted successfully');
     }
 }

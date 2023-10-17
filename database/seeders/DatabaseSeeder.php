@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +14,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // Puedes desactivar la protección de asignación masiva en el modelo o especificar valores aquí.
+        $user = User::factory()->create([
+            'name' => 'Luciano Balbiano',
+            'email' => 'balbiano06@gmail.com',
+            'password' => '$2y$10$hBgRjHVGu/FrggzMiDRAiu.TO9CCDpoooZKLoiiZlCyojpHorfrcu',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Crear rol
+        $role = Role::create(['name' => 'admin']);
+
+        // Crear permisos
+        $permissionCreateUsers = Permission::create(['name' => 'create-users']);
+        $permissionEditUsers = Permission::create(['name' => 'edit-users']); // Este permiso debe ser creado antes de ser usado
+
+        // Asignar permisos al rol
+        $role->givePermissionTo($permissionCreateUsers);
+        $role->givePermissionTo($permissionEditUsers);
+
+        // Asignar rol al usuario
+        $user->assignRole('admin');
     }
 }

@@ -26,7 +26,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($companies as $company)
+                    @forelse($companies as $company)
                         <tr>
                             <td>{{ $company->id }}</td>
                             <td>{{ $company->name }}</td>
@@ -46,7 +46,7 @@
                         <tr>
                             <td colspan="5" class="text-center">No companies found</td>
                         </tr>
-                    @endforeach
+                    @endforelse
                 </tbody>
             </table>
         </div>

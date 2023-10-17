@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(DefaultController::class)->group(function () {
-    Route::get('/panel', 'index')->name('index');
+    Route::get('/', 'index')->name('index');
 });
 
 Route::namespace('')

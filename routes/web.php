@@ -26,7 +26,7 @@ Route::get('/init_redirect', function () {
     $user = Auth::user();
 
     if ($user->hasRole('admin')) {
-        return redirect()->route('panel.index');
+        return redirect()->route('index');
     } else {
         return redirect()->route('report.dashboard');
     }

@@ -32,4 +32,5 @@ Route::namespace('')
     });
 
 
+Route::patch('users/changepassword/{user}', [UserController::class, 'changePassword'])->name('users.changepassword');
 

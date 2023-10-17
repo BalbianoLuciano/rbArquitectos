@@ -45,7 +45,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form action="{{  route('panel.users.changepassword', ['user' => $user->id]) }}" method="POST" class="mt-3" role="validate">
+        <form action="{{  route('users.changepassword', ['user' => $user->id]) }}" method="POST" class="mt-3" role="validate">
             @csrf
             @method('PATCH')
 

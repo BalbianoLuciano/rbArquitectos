@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authors\AuthorController;
 use App\Http\Controllers\Companies\CompaniesController;
+use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return 'Hello from pages route!';
+Route::controller(DefaultController::class)->group(function () {
+    Route::get('/panel', 'index')->name('index');
 });
 
 Route::namespace('')
@@ -27,7 +28,7 @@ Route::namespace('')
         Route::resource('authors', AuthorController::class);
         Route::resource('projects', ProjectController::class);
         Route::resource('companies', CompaniesController::class);
-        Route::resource('users', UserController::class);
+        Route::resource('users', UserController::class); 
     });
 
 

@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Fortify;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
+});
+
+Route::get('/init_redirect', function () {
+    /** @var User $user */
+    
+    $user = Auth::user();
+
+    if ($user->hasRole('admin')) {
+        return redirect()->route('panel.index');
+    } else {
+        return redirect()->route('report.dashboard');
+    }
 });

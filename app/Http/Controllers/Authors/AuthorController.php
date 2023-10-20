@@ -37,7 +37,18 @@ class AuthorController extends Controller
      */
     public function store(AuthorRequest $request)
     {
-        Author::create($request->validated());
+        $author = Author::create($request->validated());
+
+        if ($request->hasFile('image')) {
+            $author->addMediaFromRequest('image')
+                ->withResponsiveImages()
+                ->toMediaCollection('image');
+        } else {
+            // Aquí especificas la ruta a la imagen de perfil por defecto que has guardado en tu proyecto
+            $author->addMedia(public_path('images/default-profile.jpg'))
+                ->toMediaCollection('image');
+        }
+
         return redirect()->route('panel.authors.index')->with('success', 'Author created successfully.');
     }
 
@@ -73,6 +84,17 @@ class AuthorController extends Controller
     public function update(AuthorRequest $request, Author $author)
     {
         $author->update($request->validated());
+
+        if ($request->hasFile('image')) {
+            $author->addMediaFromRequest('image')
+                ->withResponsiveImages()
+                ->toMediaCollection('image');
+        } else {
+            // Aquí especificas la ruta a la imagen de perfil por defecto que has guardado en tu proyecto
+            $author->addMedia(public_path('images/default-profile.jpg'))
+                ->toMediaCollection('image');
+        }
+        
         return redirect()->route('panel.authors.index')->with('success', 'Author updated successfully.');
     }
 

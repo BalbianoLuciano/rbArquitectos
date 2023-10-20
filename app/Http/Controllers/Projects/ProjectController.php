@@ -47,6 +47,14 @@ class ProjectController extends Controller
         }
         $project->authors()->attach($authorRoleData);
 
+        if($request->hasfile('images'))
+        {
+            foreach($request->file('images') as $file)
+            {
+                $project->addMedia($file)->toMediaCollection('projects');
+            }
+        }
+
         
         if ($request->has('companies')) {
             // Gestionar relación con compañías

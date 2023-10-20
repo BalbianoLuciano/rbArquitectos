@@ -7,7 +7,14 @@
     @foreach ($project->authors as $author)
         <p>{{ $author->name }}</p>
     @endforeach
-    <p>{{$project->companies}}</p>
+
+    <div>
+        <h3>Project Images:</h3>
+        @foreach($project->getMedia('projects') as $media) <!-- 'projects' es el nombre de la colección -->
+            <img src="{{ $media->getUrl() }}" alt="{{ $project->name }}" style="max-width: 300px; max-height: 200px;">
+        @endforeach
+    </div>
+
     <ul>
         @foreach($project->companies as $company)
             <li>

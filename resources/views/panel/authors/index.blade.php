@@ -21,15 +21,17 @@
                     <tr class="table-header">
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Profile Picture</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($authors as $author)
                         <tr>
-                            <td>{{ $author->author_id }}</td>
-                            <td>{{ $author->name }}</td>
-                            <td>
+                            <td class="text-center align-middle">{{ $author->author_id }}</td>
+                            <td class="text-center align-middle">{{ $author->name }}</td>
+                            <td class="text-center align-middle"><img src="{{ $author->getFirstMediaUrl('image') }}" alt="{{ $author->name }}" width="80" height="80"></td>
+                            <td class="text-center align-middle">
                                 <a href="{{ route('panel.authors.edit', $author) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('panel.authors.show', $author) }}" class="btn btn-info">show</a>
                                 <form action="{{ route('panel.authors.destroy', $author) }}" method="POST" style="display:inline;">

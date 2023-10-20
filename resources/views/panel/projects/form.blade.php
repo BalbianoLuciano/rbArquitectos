@@ -45,6 +45,14 @@
             @enderror
         </div>
 
+        <div class="mb-3">
+            <label for="images" class="form-label">Project Images</label>
+            <input type="file" class="form-control" id="images" name="images[]" multiple>
+            @error('images')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+
         <!-- Resto del formulario... -->
 
         @include('panel.projects.addAuthor')

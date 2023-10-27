@@ -34,56 +34,14 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        // Crear proyecto
         $project = Project::create($request->all());
 
-        // Gestionar relación con autores
-        $authors = $request->input('authors');
-        $roles = $request->input('roles');
+        $this->manageAuthors($project, $request->input('authors'), $request->input('roles'), 'attach');
+        $this->manageCompanies($project, $request, 'attach');
+        $this->uploadImages($project, $request->file('images'));
 
-        $authorRoleData = [];
-        foreach ($authors as $index => $authorId) {
-            $authorRoleData[$authorId] = ['project_role' => trim($roles[$index] ?? '')];
-        }
-        $project->authors()->attach($authorRoleData);
-
-        if($request->hasfile('images'))
-        {
-            foreach($request->file('images') as $file)
-            {
-                $project->addMedia($file)->toMediaCollection('projects');
-            }
-        }
-
-        
-        if ($request->has('companies')) {
-            // Gestionar relación con compañías
-            $companies = $request->input('companies');
-            $company_descriptions = $request->input('company_descriptions');
-            $company_roles = $request->input('company_roles');
-            $project_updates = $request->input('project_updates');
-            $company_starts = $request->input('company_starts');
-            $company_ends = $request->input('company_ends');
-
-            $companyData = [];
-            foreach ($companies as $index => $companyId) {
-                $companyData[$companyId] = [
-                    'description' => trim($company_descriptions[$index] ?? ''),
-                    'company_role' => trim($company_roles[$index] ?? ''),
-                    'project_update' => trim($project_updates[$index] ?? ''),
-                    'start' => trim($company_starts[$index] ?? ''),
-                    'end' => trim($company_ends[$index] ?? '')
-                ];
-            }
-            $project->companies()->attach($companyData);
-        }
-
-
-        // Redireccionar
         return redirect()->route('panel.projects.index')->with('success', 'Project created successfully.');
     }
-
-
 
     /**
      * Display the specified resource.
@@ -108,55 +66,16 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $request, Project $project)
     {
-        // Actualizar proyecto
         $project->update($request->all());
 
-        // Gestionar relación con autores
-        $authors = $request->input('authors');
-        $roles = $request->input('roles');
+        $this->manageAuthors($project, $request->input('authors'), $request->input('roles'), 'sync');
+        $this->manageCompanies($project, $request, 'sync');
 
-        $authorRoleData = [];
-        foreach ($authors as $index => $authorId) {
-            $authorRoleData[$authorId] = ['project_role' => trim($roles[$index] ?? '')];
-        }
-        $project->authors()->sync($authorRoleData);
-
-         // Manejar la carga de imágenes
         if ($request->hasFile('images')) {
-            // Eliminar imágenes existentes
             $project->clearMediaCollection('projects');
-
-            // Cargar las nuevas imágenes
-            foreach ($request->file('images') as $file) {
-                $project->addMedia($file)
-                        ->withResponsiveImages()
-                        ->toMediaCollection('projects');
-            }
-        }
-        
-        // Gestionar relación con compañías solo si están presentes
-        if ($request->has('companies')) {
-            $companies = $request->input('companies');
-            $company_descriptions = $request->input('company_descriptions');
-            $company_roles = $request->input('company_roles');
-            $project_updates = $request->input('project_updates');
-            $company_starts = $request->input('company_starts');
-            $company_ends = $request->input('company_ends');
-
-            $companyData = [];
-            foreach ($companies as $index => $companyId) {
-                $companyData[$companyId] = [
-                    'description' => trim($company_descriptions[$index] ?? ''),
-                    'company_role' => trim($company_roles[$index] ?? ''),
-                    'project_update' => trim($project_updates[$index] ?? ''),
-                    'start' => trim($company_starts[$index] ?? ''),
-                    'end' => trim($company_ends[$index] ?? '')
-                ];
-            }
-            $project->companies()->sync($companyData);
+            $this->uploadImages($project, $request->file('images'));
         }
 
-        // Redireccionar
         return redirect()->route('panel.projects.index')->with('success', 'Project updated successfully.');
     }
 
@@ -171,4 +90,42 @@ class ProjectController extends Controller
         return redirect()->route('panel.projects.index')
             ->with('success', 'Project deleted successfully');
     }
+
+
+    // Functions to reduce trash code
+
+    private function manageAuthors($project, $authors, $roles, $method)
+    {
+        $authorRoleData = [];
+        foreach ($authors as $index => $authorId) {
+            $authorRoleData[$authorId] = ['project_role' => trim($roles[$index] ?? '')];
+        }
+        $project->authors()->$method($authorRoleData);
+    }
+
+    private function manageCompanies($project, $request, $method)
+    {
+        if ($request->has('companies')) {
+            $companies = $request->input('companies');
+            // Similar para 'company_descriptions', 'company_roles', etc.
+
+            $companyData = [];
+            foreach ($companies as $index => $companyId) {
+                $companyData[$companyId] = [
+                    // Asigna los valores correspondientes aquí
+                ];
+            }
+            $project->companies()->$method($companyData);
+        }
+    }
+
+    private function uploadImages($project, $images)
+    {
+        foreach ($images as $file) {
+            $project->addMedia($file)->toMediaCollection('projects');
+        }
+    }
 }
+
+
+

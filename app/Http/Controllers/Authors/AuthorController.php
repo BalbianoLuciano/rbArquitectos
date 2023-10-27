@@ -86,17 +86,17 @@ class AuthorController extends Controller
         $author->update($request->validated());
 
         if ($request->hasFile('image')) {
+            // Eliminar imagen existente y cargar la nueva
+            $author->clearMediaCollection('image'); // Elimina la imagen existente
             $author->addMediaFromRequest('image')
                 ->withResponsiveImages()
                 ->toMediaCollection('image');
-        } else {
-            // Aquí especificas la ruta a la imagen de perfil por defecto que has guardado en tu proyecto
-            $author->addMedia(public_path('images/default-profile.jpg'))
-                ->toMediaCollection('image');
         }
-        
+        // Si no se proporciona una nueva imagen, la imagen existente se mantiene automáticamente
+
         return redirect()->route('panel.authors.index')->with('success', 'Author updated successfully.');
     }
+
 
     /**
      * Remove the specified author from storage.

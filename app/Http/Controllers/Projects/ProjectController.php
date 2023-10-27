@@ -121,6 +121,19 @@ class ProjectController extends Controller
         }
         $project->authors()->sync($authorRoleData);
 
+         // Manejar la carga de imágenes
+        if ($request->hasFile('images')) {
+            // Eliminar imágenes existentes
+            $project->clearMediaCollection('projects');
+
+            // Cargar las nuevas imágenes
+            foreach ($request->file('images') as $file) {
+                $project->addMedia($file)
+                        ->withResponsiveImages()
+                        ->toMediaCollection('projects');
+            }
+        }
+        
         // Gestionar relación con compañías solo si están presentes
         if ($request->has('companies')) {
             $companies = $request->input('companies');

@@ -20,6 +20,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'balbiano06@gmail.com',
             'password' => '$2y$10$hBgRjHVGu/FrggzMiDRAiu.TO9CCDpoooZKLoiiZlCyojpHorfrcu',
         ]);
+        $userTwo = User::factory()->create([
+            'name' => 'Alejandro Balbiano',
+            'email' => 'alejandrobalbiano@gmail.com',
+            'password' => '$2y$10$QytHNVBnJ64MHzJ.pxwvqu99E3c60Vczdh1dpdaah64Xh3nPuABiq', // @balbianoAlejandro123
+        ]);
+        $userThree = User::factory()->create([
+            'name' => 'Carlos Romero',
+            'email' => 'carlosromero@gmail.com',
+            'password' => '$2y$10$jFSgW8U9A/7O.gN6F0IOseIMXVBdgPgY//82EyYowAzxCduVwoioG', // @carlosRomero123
+        ]);
 
         // Crear rol
         $role = Role::create(['name' => 'admin']);
@@ -34,5 +44,7 @@ class DatabaseSeeder extends Seeder
 
         // Asignar rol al usuario
         $user->assignRole('admin');
+        $userTwo->assignRole('admin');
+        $userThree->assignRole('admin');
     }
 }

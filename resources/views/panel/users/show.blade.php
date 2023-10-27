@@ -28,13 +28,13 @@
                     @endif
 
                     <div class="mt-3">
-                        <a href="{{ route('panel.users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('panel.users.edit', $user->id) }}" class="btn btn-warning">Edit <i class="bi bi-pencil pl-2"></i></a>
                         <form action="{{ route('panel.users.destroy', $user->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" data-message="eliminar a este usuario '{{ $user->name }}'" role="confirm">Delete</button>
+                            <button type="submit" class="btn btn-danger" data-message="eliminar a este usuario '{{ $user->name }}'" role="confirm">Delete <i class="bi bi-trash pl-2"></i></button>
                         </form>
-                        <a href="{{ route('panel.users.index') }}" class="btn btn-info">Go back</a>
+                        <a href="{{ route('panel.users.index') }}" class="btn btn-secondary">Go back <i class="bi bi-arrow-left-circle pl-2"></i></a>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,9 @@
         <div class="card-header">
             <h3 class="card-title">Authors</h3>
             <div class="card-tools">
-                <a href="{{ route('panel.authors.create') }}" class="btn btn-primary">Create Author</a>
+                <a href="{{ route('panel.authors.create') }}" class="btn btn-primary">
+                    Create Author <i class="bi bi-plus-circle ml-2"></i>
+                </a>
             </div>
         </div>
         <!-- /.card-header -->
@@ -30,14 +32,22 @@
                         <tr>
                             <td class="text-center align-middle">{{ $author->author_id }}</td>
                             <td class="text-center align-middle">{{ $author->name }}</td>
-                            <td class="text-center align-middle"><img src="{{ $author->getFirstMediaUrl('image') }}" alt="{{ $author->name }}" width="80" height="80"></td>
                             <td class="text-center align-middle">
-                                <a href="{{ route('panel.authors.edit', $author) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('panel.authors.show', $author) }}" class="btn btn-info">show</a>
+                                <img src="{{ $author->getFirstMediaUrl('image') }}" alt="{{ $author->name }}" width="80" height="80">
+                            </td>
+                            <td class="text-center align-middle">
+                                <a href="{{ route('panel.authors.edit', $author) }}" class="btn btn-warning">
+                                    Edit <i class="bi bi-pencil ml-2"></i>
+                                </a>
+                                <a href="{{ route('panel.authors.show', $author) }}" class="btn btn-info">
+                                    Show <i class="bi bi-eye ml-2"></i>
+                                </a>
                                 <form action="{{ route('panel.authors.destroy', $author) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete <i class="bi bi-trash ml-2"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

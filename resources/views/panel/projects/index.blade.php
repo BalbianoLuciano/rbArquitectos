@@ -11,7 +11,7 @@
         <div class="card-header">
             <h3 class="card-title">Projects</h3>
             <div class="card-tools">
-                <a href="{{ route('panel.projects.create') }}" class="btn btn-primary">Create Project</a>
+                <a href="{{ route('panel.projects.create') }}" class="btn btn-primary">Create Project <i class="bi bi-plus-circle ml-2"></i></a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -33,12 +33,12 @@
                             <td>{{ $project->start }}</td>
                             <td>{{ $project->end }}</td>
                             <td>
-                                <a href="{{ route('panel.projects.edit', $project) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('panel.projects.show', $project) }}" class="btn btn-info">show</a>
+                                <a href="{{ route('panel.projects.edit', $project) }}" class="btn btn-warning">Edit<i class="bi bi-pencil ml-2"></i></a>
+                                <a href="{{ route('panel.projects.show', $project) }}" class="btn btn-info">show <i class="bi bi-eye ml-2"></i></a>
                                 <form action="{{ route('panel.projects.destroy', $project) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">Delete <i class="bi bi-trash ml-2"></i></button>
                                 </form>
                             </td>
                         </tr>

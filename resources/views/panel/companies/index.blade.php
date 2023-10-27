@@ -11,7 +11,9 @@
         <div class="card-header">
             <h3 class="card-title">Companies</h3>
             <div class="card-tools">
-                <a href="{{ route('panel.companies.create') }}" class="btn btn-primary">Create Company</a>
+                <a href="{{ route('panel.companies.create') }}" class="btn btn-primary">
+                    Create Company <i class="bi bi-plus-circle ml-2"></i>
+                </a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -33,12 +35,18 @@
                             <td>{{ $company->direction }}</td>
                             <td>{{ Str::limit($company->description, 50) }}</td>
                             <td>
-                                <a href="{{ route('panel.companies.edit', $company) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('panel.companies.show', $company) }}" class="btn btn-info">Show</a>
+                                <a href="{{ route('panel.companies.edit', $company) }}" class="btn btn-warning">
+                                    Edit <i class="bi bi-pencil ml-2"></i>
+                                </a>
+                                <a href="{{ route('panel.companies.show', $company) }}" class="btn btn-info">
+                                    Show <i class="bi bi-eye ml-2"></i>
+                                </a>
                                 <form action="{{ route('panel.companies.destroy', $company) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete <i class="bi bi-trash ml-2"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

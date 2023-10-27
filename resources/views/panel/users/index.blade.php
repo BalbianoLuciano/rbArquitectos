@@ -11,7 +11,9 @@
         <div class="card-header">
             <h3 class="card-title">Users</h3>
             <div class="card-tools">
-                <a href="{{ route('panel.users.create') }}" class="btn btn-primary">Create User</a>
+                <a href="{{ route('panel.users.create') }}" class="btn btn-primary">
+                    Create User <i class="bi bi-plus-circle ml-2"></i>
+                </a>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -33,12 +35,18 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d-m-Y') }}</td>
                             <td>
-                                <a href="{{ route('panel.users.edit', $user) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('panel.users.show', $user) }}" class="btn btn-info">Show</a>
+                                <a href="{{ route('panel.users.edit', $user) }}" class="btn btn-warning">
+                                    Edit <i class="bi bi-pencil ml-2"></i>
+                                </a>
+                                <a href="{{ route('panel.users.show', $user) }}" class="btn btn-info">
+                                    Show <i class="bi bi-eye ml-2"></i>
+                                </a>
                                 <form action="{{ route('panel.users.destroy', $user) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
+                                        Delete <i class="bi bi-trash ml-2"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

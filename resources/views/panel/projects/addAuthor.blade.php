@@ -1,6 +1,6 @@
 <div class="mb-3" id="authors-container">
     <label for="authors" class="form-label">Authors</label>
-    <div id="author-role-pair-1" class="author-role-pair">
+    <div id="author-role-pair-1" class="author-role-pair border-bottom my-3">
         <select class="form-control" name="authors[]" required>
             <option value="">Select an author</option>
             @foreach ($authors as $author)
@@ -10,7 +10,7 @@
         <input type="text" class="form-control my-3" name="roles[]" placeholder="Role" required>
     </div>
 </div>
-<button type="button" id="add-author-btn" class="">Add another author</button>
+<button type="button" id="add-author-btn" class="btn btn-warning">Add another author<i class="bi bi-plus-square-fill ml-2"></i></button>
 
 
 @push('js')
@@ -30,8 +30,8 @@
                     <option value="{{ $author->author_id }}">{{ $author->name }}</option>
                 @endforeach
             </select>
-            <input type="text" class="form-control" name="roles[]" placeholder="Role" required>
-            <button type="button" onclick="removeAuthorRolePair(${authorCounter})">Remove</button>
+            <input type="text" class="form-control my-3" name="roles[]" placeholder="Role" required>
+            <button type="button" onclick="removeAuthorRolePair(${authorCounter})" class="btn btn-danger mb-3">Remove</button>
         `;
             authorsContainer.appendChild(newAuthorRolePair);
         });

@@ -1,9 +1,9 @@
-<div class="mb-3" id="companies-container">
+<div class="my-3" id="companies-container">
     <label for="companies" class="form-label">Companies</label>
     <div id="company-role-pair-1" class="company-role-pair">
     </div>
 </div>
-<button type="button" id="add-company-btn" class="">Add another company</button>
+<button type="button" id="add-company-btn" class="btn btn-warning">Add another company<i class="bi bi-plus-square-fill ml-2"></i></button>
 
 
 
@@ -34,7 +34,7 @@
             <input type="text" class="form-control my-3" name="project_updates[]" placeholder="Project Update">
             <input type="date" class="form-control my-3" name="company_starts[]" placeholder="Start Date">
             <input type="date" class="form-control my-3" name="company_ends[]" placeholder="End Date">
-            <button type="button" onclick="removeCompanyRolePair(${companyCounter})">Remove</button>
+            <button type="button" onclick="removeCompanyRolePair(${companyCounter})" class="btn btn-danger mb-3">Remove</button>
             `;
 
             companiesContainer.appendChild(newCompanyRolePair);

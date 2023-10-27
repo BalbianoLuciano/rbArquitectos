@@ -45,9 +45,26 @@
             @enderror
         </div>
 
+        <!-- Imágenes del Proyecto -->
+        @if(isset($project) && $project->hasMedia('projects')) <!-- Asegúrate de que 'projects' sea el nombre correcto de la colección -->
+            <div class="mb-3">
+                <label class="form-label">Current Project Images</label>
+                <div>
+                    @foreach($project->getMedia('projects') as $image) <!-- Usar 'projects' para coincidir con la colección de medios -->
+                        <img src="{{ $image->getUrl() }}" alt="Project Image" class="img-thumbnail mb-2" style="max-width: 150px; max-height: 150px;">
+                    @endforeach
+                </div>
+            </div>
+        @endif
+
+        <!-- Campo de Subida de Imagen Múltiple -->
         <div class="mb-3">
             <label for="images" class="form-label">Project Images</label>
-            <input type="file" class="form-control" id="images" name="images[]" multiple>
+            <div class="input-group">
+                <input type="file" name="images[]" id="images" class="form-control" multiple onchange="updateImagesDescription()">
+                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('images').click()">Select Images <i class="bi bi-file-image ml-2"></i></button>
+                <p id="images-description" class="mb-0 mx-3"></p>
+            </div>
             @error('images')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -58,8 +75,36 @@
         @include('panel.projects.addAuthor')
         @include('panel.projects.addCompany')
 
-        
+        <div class="my-3">
+            <button type="submit" class="btn btn-primary">{{ $buttonText }}<i class="bi bi-check-circle ml-2"></i></button>
+            <a href="{{ route('panel.projects.index') }}" class="btn btn-secondary">Go back <i class="bi bi-arrow-left-circle ml-2"></i></a>
+        </div>        
     </div>
-    <button type="submit" class="btn btn-primary">{{ $buttonText }}</button>
-    <a href="{{ route('panel.projects.index') }}" class="btn btn-secondary">Go back</a>
 </div>
+
+
+@push('js')
+    <script>
+        function updateImagesDescription() {
+            const input = document.getElementById('images');
+            const description = document.getElementById('images-description');
+            if (input.files && input.files.length) {
+                description.textContent = 'Selected images: ' + Array.from(input.files).map(file => file.name).join(', ');
+            } else {
+                description.textContent = '';
+            }
+        }
+    </script>
+@endpush
+
+@push('css')
+    <style>
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+@endpush

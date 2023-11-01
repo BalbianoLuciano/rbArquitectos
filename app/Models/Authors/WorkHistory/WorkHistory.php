@@ -3,9 +3,9 @@
 namespace App\Models\Authors\WorkHistory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class WorkHistory extends Model
+class WorkHistory extends Pivot
 {
     use HasFactory;
 

@@ -36,8 +36,8 @@
             @endif
         
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('panel.users.index') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save<i class="bi bi-check-circle pl-2"></i></button>
+                <a href="{{ route('panel.users.index') }}" class="btn btn-secondary">Cancel<i class="bi bi-arrow-left-circle pl-2"></i></a>
             </div>
         </form>
     </div>
@@ -61,8 +61,8 @@
             </div>
         
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a href="{{ route('panel.users.index') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save<i class="bi bi-check-circle pl-2"></i></button>
+                <a href="{{ route('panel.users.index') }}" class="btn btn-secondary">Cancel<i class="bi bi-arrow-left-circle pl-2"></i></a>
             </div>
         </form>
     </div>

@@ -38,8 +38,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            @if(isset($author) && $author->companies && $author->companies->isNotEmpty())
-            
+            @if(isset($author) && $author->companies->isNotEmpty())
+
                 let companies = @json($author->companies);
 
                 companies.forEach((companies, index) => {

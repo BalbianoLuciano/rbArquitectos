@@ -32,6 +32,8 @@
             </div>
         </div>
 
+        @include('panel.authors.addWorkHistory')
+
         {{-- Botones --}}
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">{{ $buttonText }} <i class="bi bi-check-circle ml-2"></i></button>

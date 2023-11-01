@@ -107,12 +107,20 @@ class ProjectController extends Controller
     {
         if ($request->has('companies')) {
             $companies = $request->input('companies');
-            // Similar para 'company_descriptions', 'company_roles', etc.
+            $company_descriptions = $request->input('company_descriptions');
+            $company_roles = $request->input('company_roles');
+            $project_updates = $request->input('project_updates');
+            $company_starts = $request->input('company_starts');
+            $company_ends = $request->input('company_ends');
 
             $companyData = [];
             foreach ($companies as $index => $companyId) {
                 $companyData[$companyId] = [
-                    // Asigna los valores correspondientes aquí
+                    'description' => trim($company_descriptions[$index] ?? ''),
+                    'company_role' => trim($company_roles[$index] ?? ''),
+                    'project_update' => trim($project_updates[$index] ?? ''),
+                    'start' => trim($company_starts[$index] ?? ''),
+                    'end' => trim($company_ends[$index] ?? '')
                 ];
             }
             $project->companies()->$method($companyData);

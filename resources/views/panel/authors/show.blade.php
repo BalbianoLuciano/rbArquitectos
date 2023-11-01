@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mt-4">
+<div class="container pt-4">
     <div class="card shadow-sm">
         <div class="card-header bg-dark text-white">
             <h2 class="mb-0">{{ $author->name }}</h2>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authors;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Authors\AuthorRequest;
 use App\Models\Authors\Author;
+use App\Models\Company\Company;
 
 class AuthorController extends Controller
 {
@@ -26,7 +27,9 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        return view('panel.authors.create');
+        $companies = Company::all();
+
+        return view('panel.authors.create', compact('companies'));
     }
 
     /**
@@ -48,6 +51,8 @@ class AuthorController extends Controller
             $author->addMedia(public_path('images/default-profile.jpg'))
                 ->toMediaCollection('image');
         }
+
+        $this->manageWorkHistories($author, $request, 'attach');
 
         return redirect()->route('panel.authors.index')->with('success', 'Author created successfully.');
     }
@@ -71,7 +76,9 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        return view('panel.authors.edit', compact('author'));
+        $companies = Company::all();
+
+        return view('panel.authors.edit', compact('author', 'companies'));
     }
 
     /**
@@ -92,7 +99,8 @@ class AuthorController extends Controller
                 ->withResponsiveImages()
                 ->toMediaCollection('image');
         }
-        // Si no se proporciona una nueva imagen, la imagen existente se mantiene automáticamente
+
+        $this->manageWorkHistories($author, $request, 'sync');
 
         return redirect()->route('panel.authors.index')->with('success', 'Author updated successfully.');
     }
@@ -108,5 +116,27 @@ class AuthorController extends Controller
     {
         $author->delete();
         return redirect()->route('panel.authors.index')->with('success', 'Author deleted successfully.');
+    }
+
+    private function manageWorkHistories($author, $request, $method)
+    {
+        if ($request->has('companies')) {
+
+            $companies = $request->input('companies');
+            $positions = $request->input('positions');
+            $starts = $request->input('starts');
+            $ends = $request->input('ends');
+
+            $workHistoryData = [];
+
+            foreach ($companies as $index => $companyId) {
+                $workHistoryData[$companyId] = [
+                    'position' => trim($positions[$index] ?? ''),
+                    'start' => trim($starts[$index] ?? ''),
+                    'end' => trim($ends[$index] ?? '')
+                ];
+            }
+            $author->companies()->$method($workHistoryData);
+        }
     }
 }

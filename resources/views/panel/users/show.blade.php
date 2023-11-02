@@ -41,7 +41,3 @@
         </div>
     </div>
 @stop
-
-{{-- @section('js')
-    @vite(['resources/js/form.js'])
-@stop --}}

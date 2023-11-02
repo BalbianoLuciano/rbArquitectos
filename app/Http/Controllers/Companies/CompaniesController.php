@@ -30,7 +30,18 @@ class CompaniesController extends Controller
      */
     public function store(CompaniesRequest $request)
     {
-        Company::create($request->validated());
+        $company = Company::create($request->validated());
+
+        if ($request->hasFile('image')) {
+            $company->addMediaFromRequest('image')
+                ->withResponsiveImages()
+                ->toMediaCollection('image');
+        } else {
+            // Aquí especificas la ruta a la imagen de perfil por defecto que has guardado en tu proyecto
+            $company->addMedia(public_path('images/default-company.png'))
+                ->toMediaCollection('image');
+        }
+
         return redirect()->route('panel.companies.index')->with('success', 'Company created successfully!');
     }
 
@@ -56,6 +67,15 @@ class CompaniesController extends Controller
     public function update(CompaniesRequest $request, Company $company)
     {
         $company->update($request->validated());
+
+        if ($request->hasFile('image')) {
+            // Eliminar imagen existente y cargar la nueva
+            $company->clearMediaCollection('image'); // Elimina la imagen existente
+            $company->addMediaFromRequest('image')  
+                ->withResponsiveImages()
+                ->toMediaCollection('image');
+        }
+
         return redirect()->route('panel.companies.index')->with('success', 'Company updated successfully!');
     }
 

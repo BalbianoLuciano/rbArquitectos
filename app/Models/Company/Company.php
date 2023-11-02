@@ -8,10 +8,13 @@ use App\Models\Company\Contribution\Contribution;
 use App\Models\Projects\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Company extends Model
+class Company extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $primaryKey = 'company_id';
 
@@ -35,5 +38,20 @@ class Company extends Model
                     ->using(Contribution::class)
                     ->withPivot(['description', 'company_role', 'project_update', 'start', 'end'])
                     ->withTimestamps();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')
+            ->useDisk('media')
+            ->withResponsiveImages()
+            ->singleFile();
+    }
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(368)
+            ->height(232)
+            ->sharpen(10);
     }
 }

@@ -8,6 +8,12 @@
                 <h1 class="card-title"><strong>{{ $project->name }}</strong></h1>
                 <p class="card-text"><small class="text-muted"><i class="bi bi-calendar-range"></i> {{ $project->start }} - {{ $project->end }}</small></p>
                 <p class="card-text text-base">{{ $project->description }}</p>
+                <!-- Indicador de si es 'Otro Proyecto' -->
+                @if($project->isOtherProject === 1)
+                    <p class="text-muted fst-italic">This is an Other Project.</p>
+                @else
+                    <p class="text-muted fst-italic">This is a Our Project.</p>
+                @endif
             </div>
         </div>
         <!-- Authors -->

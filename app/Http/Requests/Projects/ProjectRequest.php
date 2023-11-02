@@ -27,6 +27,7 @@ class ProjectRequest extends FormRequest
             'description' => 'nullable|string',
             'start' => 'nullable|date',
             'end' => 'nullable|date|after_or_equal:start',
+            'isOtherProject' => 'sometimes|boolean',
             'authors' => 'required|array|min:1',
             'authors.*' => 'exists:authors,author_id',
             'roles' => 'array|min:1',
@@ -46,6 +47,7 @@ class ProjectRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'name.max' => 'The name may not be greater than 255 characters.',
+            'isOtherProject.boolean' => 'The isOtherProject field must be true or false.',
             'authors.required' => 'At least one author must be assigned to the project.',
             'authors.*.exists' => 'One or more of the provided authors do not exist.',
             'companies.*.exists' => 'One or more of the provided companies do not exist.',

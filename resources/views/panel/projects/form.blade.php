@@ -27,6 +27,15 @@
             @enderror
         </div>
 
+        <div class="mb-3 form-check">
+            <input type="hidden" name="isOtherProject" value="0">
+            <input type="checkbox" class="form-check-input" id="isOtherProject" name="isOtherProject" value="1" {{ old('isOtherProject', $project->isOtherProject ?? 0) ? 'checked' : '' }}>
+            <label class="form-check-label" for="isOtherProject">Is this an Other Project?</label>
+            @error('isOtherProject')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
+        </div>
+        
         <div class="mb-3">
             <label for="start" class="form-label">Start Date (Optional)</label>
             <input type="date" class="form-control" id="start" name="start"
@@ -81,30 +90,3 @@
         </div>        
     </div>
 </div>
-
-
-@push('js')
-    <script>
-        function updateImagesDescription() {
-            const input = document.getElementById('images');
-            const description = document.getElementById('images-description');
-            if (input.files && input.files.length) {
-                description.textContent = 'Selected images: ' + Array.from(input.files).map(file => file.name).join(', ');
-            } else {
-                description.textContent = '';
-            }
-        }
-    </script>
-@endpush
-
-@push('css')
-    <style>
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-        input[type="file"] {
-            display: none;
-        }
-    </style>
-@endpush

@@ -20,6 +20,7 @@ class Project extends Model implements HasMedia
         'name',
         'direction',
         'description',
+        'isOtherProject',
         'start',
         'end',
     ];

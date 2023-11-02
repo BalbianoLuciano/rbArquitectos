@@ -4,8 +4,20 @@
 <h1 class="">{{ $company->name }}</h1>
     <div class="card">
         <div class="card-body">
-            <p class="font-weight-bold text-secondary">Direction: <span class="text-normal">{{ $company->direction }}</span></p>
-            <p class="font-italic">{{ $company->description }}</p>
+            <p class="font-weight-bold text-secondary"><i class="bi bi-geo-alt-fill pr-2"></i> <span class="text-normal">{{ $company->direction }}</span></p>
+
+            <div class="d-flex align-items-start">
+                @if($company->hasMedia('image'))
+                    <div class="flex-shrink-0">
+                        <img src="{{ $company->getFirstMediaUrl('image') }}" alt="{{ $company->name }}" class="img-fluid" style="max-height: 300px;">
+                        {{-- Biografía --}}
+                    </div>
+                    <div class="p-2 flex-grow-1" style="height: 300px; overflow-y: auto;">
+                        <p>{{ $company->description }}</p>
+                    </div>
+                @endif
+        
+            </div>
     
             <h2 class="mt-4">Projects</h2>
             <div class="table-responsive">

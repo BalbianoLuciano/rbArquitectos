@@ -19,11 +19,12 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
                 <thead>
-                    <tr class="table-header">
+                    <tr class="table-header text-center">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Direction</th>
                         <th>Description</th>
+                        <th>Logo</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -34,6 +35,9 @@
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->direction }}</td>
                             <td>{{ Str::limit($company->description, 50) }}</td>
+                            <td class="text-center align-middle">
+                                <img src="{{ $company->getFirstMediaUrl('image') }}" alt="{{ $company->name }}" width="80" height="80">
+                            </td>
                             <td>
                                 <a href="{{ route('panel.companies.edit', $company) }}" class="btn btn-warning">
                                     Edit <i class="bi bi-pencil ml-2"></i>

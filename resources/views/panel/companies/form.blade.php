@@ -18,6 +18,26 @@
             @error('description')<p class="text-danger">{{ $message }}</p>@enderror
         </div>
 
+        {{-- Imagen Existente --}}
+        @if(isset($company) && $company->hasMedia('image'))
+            <div class="mb-3">
+                <label class="form-label">Current Profile Image</label>
+                <div>
+                    <img src="{{ $company->getFirstMediaUrl('image') }}" alt="Current Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                </div>
+            </div>
+        @endif
+
+        {{-- Campo de Subida de Imagen --}}
+        <div class="mb-3">
+            <label for="image" class="form-label">Company Image</label>
+            <div class="input-group">
+                <input type="file" name="image" id="image" class="form-control" onchange="updateImageDescription()">
+                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('image').click()">Select Image<i class="bi bi-file-image ml-2"></i></button>
+                <p id="image-description" class="mb-0 mx-3"></p>
+            </div>
+        </div>
+
         <div>
             <button type="submit" class="btn btn-primary">
                 {{ $buttonText }} <i class="bi bi-check-circle ml-2"></i>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->date('start')->nullable();
             $table->date('end')->nullable();
+            $table->boolean('isOtherProject')->default(false); 
             $table->timestamps();
         });
     }

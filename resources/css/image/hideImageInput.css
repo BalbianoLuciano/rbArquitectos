@@ -1,0 +1,7 @@
+.input-group {
+    display: flex;
+    align-items: center;
+}
+input[type="file"] {
+    display: none;
+}

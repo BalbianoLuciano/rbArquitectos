@@ -20,7 +20,7 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
                 <thead>
-                    <tr class="table-header">
+                    <tr class="table-header text-center">
                         <th>ID</th>
                         <th>Name</th>
                         <th>Profile Picture</th>

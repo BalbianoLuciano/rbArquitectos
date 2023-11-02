@@ -22,6 +22,8 @@ class Author extends Model implements HasMedia
         'user_id',
         'name',
         'biography',
+        'date_of_birth', 
+        'place_of_birth', 
     ];
 
     public function user()

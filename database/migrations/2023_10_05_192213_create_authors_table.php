@@ -16,11 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable(); // Puede ser NULL
             $table->string('name');
             $table->text('biography');
-
-            
+            $table->date('date_of_birth'); 
+            $table->string('place_of_birth');
+        
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
-        });
+        });        
     }
 
     /**

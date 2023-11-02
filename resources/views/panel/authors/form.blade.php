@@ -1,9 +1,22 @@
 <div class="card">
     <div class="card-body">
+
         {{-- Campo Nombre --}}
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $author->name ?? '') }}" required>
+        </div>
+
+        {{-- Campo Fecha de Nacimiento --}}
+        <div class="mb-3">
+            <label for="date_of_birth" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth', $author->date_of_birth ?? '') }}" required>
+        </div>
+
+        {{-- Campo Lugar de Nacimiento --}}
+        <div class="mb-3">
+            <label for="place_of_birth" class="form-label">Place of Birth</label>
+            <input type="text" class="form-control" id="place_of_birth" name="place_of_birth" value="{{ old('place_of_birth', $author->place_of_birth ?? '') }}" required>
         </div>
 
         {{-- Campo Biografía --}}
@@ -41,29 +54,3 @@
         </div>
     </div>
 </div>
-
-@push('js')
-    <script>
-        function updateImageDescription() {
-            const input = document.getElementById('image');
-            const description = document.getElementById('image-description');
-            if (input.files && input.files[0]) {
-                description.textContent = 'Selected image: ' + input.files[0].name;
-            } else {
-                description.textContent = '';
-            }
-        }
-    </script>
-@endpush
-
-@push('css')
-    <style>
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-        input[type="file"] {
-            display: none;
-        }
-    </style>
-@endpush

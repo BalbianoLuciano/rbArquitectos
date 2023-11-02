@@ -27,6 +27,8 @@ class AuthorRequest extends FormRequest
             'user_id' => 'nullable|exists:users,id',
             'name' => 'required|string|max:255',
             'biography' => 'required|string',
+            'date_of_birth' => 'required|date', // Añadido - valida una fecha
+            'place_of_birth' => 'required|string|max:255', // Añadido - valida una cadena
         ];
     }
 
@@ -42,6 +44,10 @@ class AuthorRequest extends FormRequest
             'name.required' => 'The name field is required.',
             'name.max' => 'The name may not be greater than 255 characters.',
             'biography.required' => 'The biography field is required.',
+            'date_of_birth.required' => 'The date of birth is required.', // Mensaje de error añadido
+            'date_of_birth.date' => 'The date of birth is not a valid date.', // Mensaje de error añadido
+            'place_of_birth.required' => 'The place of birth is required.', // Mensaje de error añadido
+            'place_of_birth.max' => 'The place of birth may not be greater than 255 characters.', // Mensaje de error añadido
         ];
     }
 }

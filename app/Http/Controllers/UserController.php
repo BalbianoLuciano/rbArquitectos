@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('panel.users.create');
+        $roles = Role::all(); // Obtener todos los roles
+        return view('panel.users.create', compact('roles'));
     }
 
      /**
@@ -40,6 +42,11 @@ class UserController extends Controller
     public function store(UserRequest $request, CreatesNewUsers $creator)
     {
         event(new Registered($user = $creator->create($request->all())));
+
+        // Asignar roles al usuario recién creado
+        if ($request->has('roles')) {
+            $user->assignRole($request->input('roles'));
+        }
 
         return redirect()->route('panel.users.show', $user);
     }
@@ -63,9 +70,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('panel.users.edit', compact('user'));
+        $roles = Role::all(); // Asegúrate de tener el modelo Role importado
+        $userRoles = $user->roles->pluck('name')->toArray();
+        return view('panel.users.edit', compact('user', 'roles', 'userRoles'));
     }
-
      /**
      * Update the specified resource in storage.
      *
@@ -76,6 +84,7 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user)
     {
         $user->update($request->all());
+        $user->syncRoles($request->roles);
         
         return redirect()->route('panel.users.show', ['user' => $user]);
     }

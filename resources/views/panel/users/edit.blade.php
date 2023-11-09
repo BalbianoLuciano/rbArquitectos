@@ -23,6 +23,19 @@
                 <label for="email" class="form-label">Email</label>
                 <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" required>
             </div>
+
+            
+            <div class="mb-3">
+                <label for="roles" class="form-label">Roles</label>
+                <select name="roles[]" id="roles" class="form-control" multiple>
+                    @foreach($roles as $role)
+                        <option value="{{ $role->name }}" {{ in_array($role->name, $userRoles) ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
             @if ($errors->any())
                 <div class="alert alert-warning text-white alert-dismissible fade show position-fixed d-flex align-items-center"
                     style="top: 20px; right: 20px; z-index: 1050; max-width: 300px; white-space: nowrap;"

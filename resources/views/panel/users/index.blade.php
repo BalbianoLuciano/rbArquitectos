@@ -24,17 +24,23 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Created At</th>
+                        <th>Roles</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($users as $user)
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->created_at->format('d-m-Y') }}</td>
-                            <td>
+                            <td class="text-center align-middle">{{ $user->id }}</td>
+                            <td class="text-center align-middle">{{ $user->name }}</td>
+                            <td class="text-center align-middle">{{ $user->email }}</td>
+                            <td class="text-center align-middle">{{ $user->created_at->format('d-m-Y') }}</td>
+                            <td class="text-center align-middle">
+                                @foreach ($user->roles as $role)
+                                    <span class="badge badge-dark">{{ $role->name }}</span><br>
+                                @endforeach
+                            </td>
+                            <td class="text-center align-middle">
                                 <a href="{{ route('panel.users.edit', $user) }}" class="btn btn-warning">
                                     Edit <i class="bi bi-pencil ml-2"></i>
                                 </a>

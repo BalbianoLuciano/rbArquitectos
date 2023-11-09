@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Crear rol
+        $role = Role::create(['name' => 'editor']);
+        $role = Role::create(['name' => 'guest']);
         $role = Role::create(['name' => 'admin']);
 
         // Crear permisos

@@ -37,14 +37,14 @@
             </div>
 
             @if ($errors->any())
-                <div class="alert alert-warning text-white alert-dismissible fade show position-fixed d-flex align-items-center"
-                    style="top: 20px; right: 20px; z-index: 1050; max-width: 300px; white-space: nowrap;"
+                <div class="alert alert-warning alert-dismissible p-0 fade show position-fixed d-flex align-items-center"
+                    style="top: 20px; right: 20px; z-index: 1050; white-space: normal;"
                     role="alert">
-
                     @foreach ($errors->all() as $error)
-                        {{ $error }}
+                        <i class="bi bi-exclamation-square-fill text-black px-2"></i>
+                        <span>{{ $error }}</span>
                     @endforeach
-                    <button type="button" class="btn-close m-2" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" data-bs-dismiss="alert" class="" aria-label="Close" style="background: none; border: none;"><i class="bi bi-x-square-fill text-danger"></i></button>
                 </div>
             @endif
         
@@ -72,6 +72,18 @@
                 <label for="password_confirmation" class="form-label">Confirm Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
             </div>
+
+            @if ($errors->any())
+                <div class="alert alert-warning alert-dismissible p-0 fade show position-fixed d-flex align-items-center"
+                    style="top: 20px; right: 20px; z-index: 1050; white-space: normal;"
+                    role="alert">
+                    @foreach ($errors->all() as $error)
+                        <i class="bi bi-exclamation-square-fill text-black px-2"></i>
+                        <span>{{ $error }}</span>
+                    @endforeach
+                    <button type="button" data-bs-dismiss="alert" class="" aria-label="Close" style="background: none; border: none;"><i class="bi bi-x-square-fill text-danger"></i></button>
+                </div>
+            @endif
         
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Save<i class="bi bi-check-circle pl-2"></i></button>

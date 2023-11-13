@@ -47,6 +47,18 @@
 
         @include('panel.authors.addWorkHistory')
 
+        @if ($errors->any())
+            <div class="alert alert-warning alert-dismissible p-0 fade show position-fixed d-flex align-items-center"
+                style="top: 20px; right: 20px; z-index: 1050; white-space: normal;"
+                role="alert">
+                @foreach ($errors->all() as $error)
+                    <i class="bi bi-exclamation-square-fill text-black px-2"></i>
+                    <span>{{ $error }}</span>
+                @endforeach
+                <button type="button" data-bs-dismiss="alert" class="" aria-label="Close" style="background: none; border: none;"><i class="bi bi-x-square-fill text-danger"></i></button>
+            </div>
+        @endif
+
         {{-- Botones --}}
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">{{ $buttonText }} <i class="bi bi-check-circle ml-2"></i></button>

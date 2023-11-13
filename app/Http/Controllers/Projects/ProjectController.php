@@ -127,10 +127,16 @@ class ProjectController extends Controller
         }
     }
 
-    private function uploadImages($project, $images)
+    private function uploadImages($project, $files)
     {
-        foreach ($images as $file) {
-            $project->addMedia($file)->toMediaCollection('projects');
+        if ($files && count($files) > 0) {
+            foreach ($files as $file) {
+                $project->addMedia($file)->toMediaCollection('projects');
+            }
+        } else {
+            // Aquí especificas la ruta a la imagen predeterminada que has guardado en tu proyecto
+            $project->addMedia(public_path('images/default-project.jpg'))
+                    ->toMediaCollection('projects');
         }
     }
 }

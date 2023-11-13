@@ -49,52 +49,58 @@ class DatabaseSeeder extends Seeder
         $userTwo->assignRole('admin');
         $userThree->assignRole('admin');
 
-        // Crear 10 empresas
-        \App\Models\Company\Company::factory()->count(10)->create()->each(function ($company) {
-            // Aquí también puedes relacionar cada empresa con proyectos o autores.
-            // Por ejemplo, asignarle proyectos aleatorios a una empresa:
-            $projectsIds = \App\Models\Projects\Project::inRandomOrder()->take(rand(1, 3))->get()->pluck('id');
-            $company->projects()->attach($projectsIds, ['company_role' => 'Patrocinador']);
+        // Primero, crea las empresas y los proyectos.
+        $companies = \App\Models\Company\Company::factory()->count(10)->create();
+        $projects = \App\Models\Projects\Project::factory()->count(10)->create();
 
+        // Ahora, asocia las empresas con proyectos existentes.
+        $companies->each(function ($company) use ($projects) {
+            // Asignar proyectos aleatorios a una empresa.
+            $projectsIds = $projects->random(rand(1, 3))->pluck('id');
+            $company->projects()->attach($projectsIds, ['company_role' => 'builder']);
+
+            // Asigna la imagen por defecto si no tiene una.
             if ($company->getMedia('image')->isEmpty()) {
                 $company->copyMedia(public_path('images\default-company.png'))
-                    ->withResponsiveImages()
-                    ->toMediaCollection('image');
+                        ->withResponsiveImages()
+                        ->toMediaCollection('image');
             }
         });
 
-        \App\Models\Authors\Author::factory()->count(10)->create()->each(function ($author) {
-            // Para cada autor, puedes crear una relación con proyectos y empresas.
-            $author->projects()->attach(
-                \App\Models\Projects\Project::factory()->create()->id,
-                ['project_role' => 'Contributor'] // o cualquier rol que necesites asignar
-            );
+        // Crea autores y asócialos con las empresas y proyectos existentes.
+        \App\Models\Authors\Author::factory()->count(10)->create()->each(function ($author) use ($companies, $projects) {
+            // Asignar un proyecto aleatorio a un autor.
+            $project = $projects->random();
+            $author->projects()->attach($project, ['project_role' => 'Contributor']);
         
-            $author->companies()->attach(
-                \App\Models\Company\Company::factory()->create()->id,
-                ['position' => 'Employee'] // o la posición que necesites asignar
-            );
+            // Asignar una empresa aleatoria a un autor.
+            $company = $companies->random();
+            $author->companies()->attach($company, [
+                'position' => 'Employee',
+                'start' => now()->toDateString(), // Proporciona un valor para 'start'
+                // 'end' => ... puedes agregar esto también si es necesario y si tienes un valor adecuado
+            ]);
         
-            // Asigna la imagen por defecto al autor si no tiene una.
+            // Asigna la imagen por defecto si no tiene una.
             if ($author->getMedia('image')->isEmpty()) {
                 $author->copyMedia(public_path('images\default-profile.jpg'))
-                    ->withResponsiveImages()
-                    ->toMediaCollection('image');
+                        ->withResponsiveImages()
+                        ->toMediaCollection('image');
             }
-        });        
+        });
 
-         // Crear 10 proyectos
-         \App\Models\Projects\Project::factory()->count(10)->create()->each(function ($project) {
-            // Asignar autores aleatorios a un proyecto:
+        // Asigna autores a los proyectos existentes.
+        $projects->each(function ($project) use ($companies) {
+            // Asignar autores aleatorios a un proyecto.
             $authorsIds = \App\Models\Authors\Author::inRandomOrder()->take(rand(1, 5))->get()->pluck('author_id');
             $project->authors()->attach($authorsIds, ['project_role' => 'Colaborador']);
-        
-            // Asigna la imagen por defecto al proyecto si no tiene una.
+
+            // Asigna la imagen por defecto si no tiene una.
             if ($project->getMedia('image')->isEmpty()) {
                 $project->copyMedia(public_path('images\default-project.jpg'))
-                    ->withResponsiveImages()
-                    ->toMediaCollection('image');
+                        ->withResponsiveImages()
+                        ->toMediaCollection('projects');
             }
-        });        
+        });
     }
 }

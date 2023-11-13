@@ -16,24 +16,6 @@
                 @endif
             </div>
         </div>
-        <!-- Authors -->
-        <div class="w-auto">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title pb-3" style="font-weight: bold;">Authors</h5>
-                    <div class="card-text">
-                        <div class="row p-3 border align-items-center justify-content-between">
-                            @foreach ($project->authors as $author)
-                                <p><strong>{{ $author->name }}</strong> - <span class="text-muted bg-dark badge"> <i class="bi bi-rulers mr-2"></i>{{ $author->pivot->project_role }}</span></p>
-                                @if($author->hasMedia('image'))
-                                    <img src="{{ $author->getFirstMediaUrl('image') }}" alt="{{ $author->name }}" class="img-fluid" style="max-height: 50px;">
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Images -->
         <div class="w-full">
             <div class="card">
@@ -41,7 +23,44 @@
                     <h5 class="card-title pb-3" style="font-weight: bold;">Project Images</h5>
                     <div class="card-text d-flex flex-row flex-wrap">
                         @foreach($project->getMedia('projects') as $media)
-                            <img src="{{ $media->getUrl() }}" alt="{{ $project->name }}" class="img-fluid mb-2" style="width: 300px; height: 200px; object-fit: cover;">
+                        <img src="{{ $media->getUrl() }}" alt="{{ $project->name }}" class="img-fluid mb-2" style="width: 300px; height: 200px; object-fit: cover;">
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Authors -->
+        <div class="w-auto">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="pb-3" style="font-weight: bold;">Authors</h5>
+                    <div id="authorsAccordion">
+                        @foreach ($project->authors as $index => $author)
+                            <div class="card" style="cursor: pointer" data-toggle="collapse" data-target="#authorCollapse{{ $index }}" aria-expanded="true" aria-controls="authorCollapse{{ $index }}">
+                                <div class="card-header" id="authorHeading{{ $index }}">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-block text-left">
+                                            {{ $author->name }}
+                                            <i class="fa fa-chevron-down float-right"></i>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="authorCollapse{{ $index }}" class="collapse" aria-labelledby="authorHeading{{ $index }}" data-parent="#authorsAccordion">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <p>
+                                                <strong>{{ $author->name }}</strong> - 
+                                                <span class="text-muted bg-dark badge">
+                                                    <i class="bi bi-rulers mr-2"></i>{{ $author->pivot->project_role }}
+                                                </span>
+                                            </p>
+                                            @if($author->hasMedia('image'))
+                                                <img src="{{ $author->getFirstMediaUrl('image') }}" alt="{{ $author->name }}" class="img-fluid" style="max-height: 50px;">
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -50,21 +69,35 @@
         <!-- Associated Companies -->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Associated Companies</h5>
-                <div class="card-text">
-                    @foreach($project->companies as $company)
-                        <div class="mt-3">
-                            <h6><strong><a href="{{ route('panel.companies.show', $company) }}">{{ $company->name }}</a></strong></h6>
-                            <p class="mb-1">{{ $company->pivot->description }}</p>
-                            <p class="mb-0"><span class="badge bg-primary"> <i class="bi bi-tools mr-2"></i>{{ $company->pivot->company_role }}</span> 
-                            <small class="text-muted"><i class="bi bi-arrow-repeat"></i> {{ $company->pivot->project_update }}</small>
-                            <small class="text-muted"><i class="bi bi-calendar-check"></i> {{ $company->pivot->start }} - {{ $company->pivot->end }}</small></p>
+                <h5 class="pb-3"  style="font-weight: bold;">Associated Companies</h5>
+                <div id="associatedCompaniesAccordion">
+                    @foreach($project->companies as $index => $company)
+                        <div class="card" style="cursor: pointer">
+                            <div class="card-header" id="companyHeading{{ $index }}" data-toggle="collapse" data-target="#companyCollapse{{ $index }}" aria-expanded="true" aria-controls="companyCollapse{{ $index }}">
+                                <h6 class="mb-0">
+                                    <button class="btn">
+                                        {{ $company->name }}
+                                    </button>
+                                    <i class="fa fa-chevron-down float-right"></i>
+                                </h6>
+                            </div>
+                            <div id="companyCollapse{{ $index }}" class="collapse" aria-labelledby="companyHeading{{ $index }}" data-parent="#associatedCompaniesAccordion">
+                                <div class="card-body">
+                                    <strong><a href="{{ route('panel.companies.show', $company) }}">{{ $company->name }}</a></strong>
+                                    <p class="mb-1">{{ $company->pivot->description }}</p>
+                                    <p class="mb-0">
+                                        <span class="badge bg-primary"> <i class="bi bi-tools mr-2"></i>{{ $company->pivot->company_role }}</span> 
+                                        <small class="text-muted"><i class="bi bi-arrow-repeat"></i> {{ $company->pivot->project_update }}</small>
+                                        <small class="text-muted"><i class="bi bi-calendar-check"></i> {{ $company->pivot->start }} - {{ $company->pivot->end }}</small>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
             </div>
         </div>
-
+        
         <!-- Action Buttons -->
         <div class="pb-3">
             <a href="{{ route('panel.projects.edit', $project) }}" class="btn btn-warning me-2">Edit <i class="bi bi-pencil"></i></a>
